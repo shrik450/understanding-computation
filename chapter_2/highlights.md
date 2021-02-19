@@ -16,3 +16,16 @@ and evaluate it step by step as:
 
 In each step of the process, we take an expression, consider if we can reduce it to a simpler form, and then proceed by taking one step towards that more primitive form. 
 
+## Expressions vs Statements
+
+Expressions -> Evaluate to a irreducible value.
+Statement -> Evaluate to nothing, but change the environment.
+
+## Assigns to variables or names?
+
+In the text, the left hand side of an assignment is a name. But should it more appropriately be a variable?
+
+## While and Reduction
+
+Earlier, I said small step semantics operates by reducing expressions into simpler expressions. This isn't true in the case of a while statement, which get reduced to a statement that includes itself. So, to be more accurate, small step semantics operates by minimally reducing a statement.
+
