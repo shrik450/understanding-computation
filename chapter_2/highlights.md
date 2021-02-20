@@ -29,3 +29,10 @@ In the text, the left hand side of an assignment is a name. But should it more a
 
 Earlier, I said small step semantics operates by reducing expressions into simpler expressions. This isn't true in the case of a while statement, which get reduced to a statement that includes itself. So, to be more accurate, small step semantics operates by minimally reducing a statement.
 
+## Big Step Semantics
+
+While small step semantics describes the result of a statement or an expression by iteratively reducing it, Big Step semantics describes the full result of a statement or an expression at once. This is done by first recursively evaluating the subexpressions and then describing how the results of that evaluation are combined.
+
+Small Step Semantics: AST -> Intermediate AST -> Result
+Big Step Semantics: AST -> Result
+
