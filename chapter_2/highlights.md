@@ -42,3 +42,4 @@ Denotational semantics shows what a program does by translating it into another 
 
 One key point of denotational semantics is that while it can use existing language constructs to represent what is going on, sometimes a bit more work is required to make certain points of the language specification explicit. For example, while the implementation of denotational semantics in this chapter could've used Ruby variables as SIMPL variables, it instead choses to use an environment as a hash. This both frees the semantics of SIMPL's variables from the semantics of Ruby's variables and makes SIMPL's semantics more explicit.
 
+The "usual" way of doing denotational semantics is to translate to a mathematical model, such as lambda calculus. This translation allows us to examine the properties of the language via a model that is well understood
