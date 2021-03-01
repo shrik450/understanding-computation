@@ -11,3 +11,9 @@ The following conditions must be satisfied for determinism:
 - Every possible input must have a rule in every possible state
 - No state must have more than one rule for any possible input
 
+## Nondeterminism
+
+Relaxing the two constraints gives automata that can be more powerful. Since it is no longer guaranteed that every input string can end up in a final state, a string is accepted by a NFA if it is *possible* for it to end up in an accept state by any combination of rules in the NFA.
+
+While an implementation of a DFA keeps track of its current state, an implementation of an NFA would have to keep track of all possible states it could be in.
+
