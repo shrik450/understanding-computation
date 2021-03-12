@@ -17,6 +17,18 @@ class NFARulebook < Struct.new(:rules)
     }.to_set
   end
 
+  def follow_free_moves(states)
+    this_iteration_of_sets = next_states(states, nil)
+
+    # This is recursive, because the states you can be in after making free 
+    # moves may have free moves of their own.
+    if this_iteration_of_sets.subset? states
+      states
+    else
+      follow_free_moves states + this_iteration_of_sets
+    end
+  end
+
   def inspect
     "#<NFARulebook rules=#{rules.inspect}>"
   end
@@ -27,8 +39,13 @@ class NFA < Struct.new(:current_states, :accept_states, :rulebook)
     (accept_states & current_states).size > 0
   end
 
+  def current_states
+    # Very clever.
+    rulebook.follow_free_moves super
+  end
+
   def read_character(character)
-    self.current_states = rulebook.next_states(current_states, character)
+    self.current_states = rulebook.next_states(current_states, character)  
   end
 
   def read_string(string)

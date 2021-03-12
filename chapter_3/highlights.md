@@ -17,3 +17,5 @@ Relaxing the two constraints gives automata that can be more powerful. Since it 
 
 While an implementation of a DFA keeps track of its current state, an implementation of an NFA would have to keep track of all possible states it could be in.
 
+If an NFA has no input rule matching an alphabet in its initial state, it doesn't accept any string starting with the alphabet. The key factor here is that acceptance is based on whether it's *possible* for the NFA to get to the end, and in this case it's not. The way it works out in implementation is that the set of possible states becomes phi.
+
