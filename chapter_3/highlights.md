@@ -19,3 +19,28 @@ While an implementation of a DFA keeps track of its current state, an implementa
 
 If an NFA has no input rule matching an alphabet in its initial state, it doesn't accept any string starting with the alphabet. The key factor here is that acceptance is based on whether it's *possible* for the NFA to get to the end, and in this case it's not. The way it works out in implementation is that the set of possible states becomes phi.
 
+## Regexes
+
+Five main rules:
+
+- Empty: matches the empty string
+- Literal: matches the literal
+- Concatenation: matches two expressions one after the other
+- Or: matches either of two expressions
+- Multiple: matches either empty or the expression repeated as many times as required
+
+## Implementing Regexes
+
+We use a denotational semantics of Regexes. Regex -> NFA. We already know how to run NFAs, so we can implement regexes this way.
+
+- Empty: The NFA with only one state, the accept state.
+- Literal: An NFA with a start state, an accpet state, and one rule that accepts the literal and transitions to the accept state.
+
+The other semantics use free moves to combine together the above two NFAs:
+
+- Concatenation: Free move from the accept states of the first expression to the start state of the second expression
+- Or: Free moves from a new start state to the start states of both expressions
+- Multiple: Free moves from the accept states of the expression to a new start state and a free move from the new start state to the start state of the expression.
+
+The new start state for multiple is required to get the correct NFA in cases like `(a*b)*` (If you don't make a new one, it'll match `aaaaaa` etc.)
+

@@ -37,6 +37,10 @@ end
 class NFA < Struct.new(:current_states, :accept_states, :rulebook)
   def accepting?
     (accept_states & current_states).size > 0
+  rescue
+    puts "#{accept_states.inspect}"
+    puts "#{current_states.inspect}"
+    raise
   end
 
   def current_states
@@ -55,9 +59,9 @@ class NFA < Struct.new(:current_states, :accept_states, :rulebook)
   end
 end
 
-class NFADesign < Struct.new(:current_states, :accept_states, :rulebook)
+class NFADesign < Struct.new(:start_state, :accept_states, :rulebook)
   def to_nfa
-    NFA.new(current_states, accept_states, rulebook)
+    NFA.new(Set[start_state], accept_states, rulebook)
   end
 
   def accepts?(string)
