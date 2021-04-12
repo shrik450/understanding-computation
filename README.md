@@ -6,7 +6,7 @@ Going through the book "Understanding Computation" by Tom Stuart.
 
 Started: 2021-02-18
 
-Current Status: On Chapter 3
+Current Status: On Chapter 4
 
 Progress Tracker:
 
@@ -15,6 +15,7 @@ Progress Tracker:
 Chapter 1 | 2021-02-18
 Chapter 2 | 2021-02-18
 Chapter 3 | 2021-02-28
+Chapter 4 | 2021-04-12
 
 Ended: ---
 

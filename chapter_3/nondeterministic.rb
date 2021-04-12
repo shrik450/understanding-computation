@@ -32,6 +32,10 @@ class NFARulebook < Struct.new(:rules)
   def inspect
     "#<NFARulebook rules=#{rules.inspect}>"
   end
+
+  def alphabet
+    @alphabet ||= rules.map(&:character).compact.uniq
+  end
 end
 
 class NFA < Struct.new(:current_states, :accept_states, :rulebook)
@@ -60,14 +64,52 @@ class NFA < Struct.new(:current_states, :accept_states, :rulebook)
 end
 
 class NFADesign < Struct.new(:start_state, :accept_states, :rulebook)
-  def to_nfa
-    NFA.new(Set[start_state], accept_states, rulebook)
+  def to_nfa(current_states = Set[start_state])
+    NFA.new(current_states, accept_states, rulebook)
   end
 
   def accepts?(string)
     to_nfa.tap {|nfa|
       nfa.read_string string
     }.accepting?
+  end
+end
+
+class NFASimulation < Struct.new(:nfa_design)
+  def next_state(state, character)
+    nfa = nfa_design.to_nfa(state)
+    nfa.read_character(character)
+    nfa.current_states
+  end
+
+  def rulebook
+    nfa_design.rulebook
+  end
+
+  def rules_for(state)
+    rulebook.alphabet.map {|character|
+      FARule.new(state, character, next_state(state, character))
+    }
+  end
+
+  # @param [Set<Set>] states
+  # @return [Array]
+  def discover_states_and_rules(states)
+    rules = states.flat_map {|state| rules_for state }
+    next_states = rules.map(&:follow).to_set
+    if next_states.subset? states
+      [states, rules]
+    else
+      discover_states_and_rules(states)
+    end
+  end
+
+  def to_dfa_design
+    start_state = nfa_design.to_nfa.current_states
+    states, rules = discover_states_and_rules(Set[start_state])
+    accept_states = states.filter {|state| nfa_design.to_nfa(state).accepting? }
+
+    DFADesign.new(start_state, accept_states, DFARulebook.new(rules))
   end
 end
 
